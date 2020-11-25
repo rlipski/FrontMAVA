@@ -1,21 +1,20 @@
-import 'react-native-gesture-handler';
-
 import React, {useState, useEffect } from 'react';
 import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+
+import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import AsyncStorage from '@react-native-community/async-storage'
 
 import HomeScreen from './screens/HomeScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import SignUpScreen from './screens/SignUpScreen';
+import AccountScreen from './screens/AccountScreen';
 
-const STORAGE_KEY = '@save_token';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function App() {
   const [token, setToken] = useState('');
+
 
   return (
     <NavigationContainer>
@@ -26,8 +25,7 @@ function App() {
         barStyle={{ backgroundColor: '#694fad' }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Account" component={SettingsScreen} />
-        <Tab.Screen name="SignUp" component={SignUpScreen} />
+        <Tab.Screen name="Account" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

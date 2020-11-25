@@ -11,7 +11,7 @@ import {
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import Api from '../src/Api';
+import Api from '../Api';
 
 function Form() {
   const STORAGE_KEY = '@save_token';
