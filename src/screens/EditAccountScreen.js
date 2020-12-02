@@ -10,13 +10,15 @@ import Loading from '../components/Loading';
 import Heading from '../components/Heading';
 import { AuthContext } from '../contexts/AuthContext';
 
-function RegistrationScreen({ navigation }) {
+function EditAccountScreen({ navigation }) {
   const {
-    auth: { register }
+    auth: { editAccount },
+    user
   } = React.useContext(AuthContext);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [token, setToken] = useState(user.token);
+  const [name, setName] = useState(user.user.name);
+  const [email, setEmail] = useState(user.user.email);
+  const [phone, setPhone] = useState(user.user.phone);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,10 +29,10 @@ function RegistrationScreen({ navigation }) {
         name={'close-circle-outline'}
         style={styles.closeIcon}
         onPress={() => {
-          navigation.navigate('Login');
+          navigation.navigate('Profile');
         }}
       />
-      <Heading style={styles.title}>{error}REGISTRATION</Heading>
+      <Heading style={styles.title}>{error}EDIT</Heading>
       <Input
         style={styles.input}
         placeholder={'Name'}
@@ -46,25 +48,18 @@ function RegistrationScreen({ navigation }) {
       />
       <Input
         style={styles.input}
-        placeholder={'Password'}
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        placeholder={'Phone'}
+        value={phone}
+        onChangeText={setPhone}
       />
-      <Input
-        style={styles.input}
-        placeholder={'Password'}
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+
       <FilledButton
         style={styles.input}
-        title={'Register'}
+        title={'Save'}
         onPress={async () => {
           try {
             setLoading(true);
-            await register(name, email, password);
+            await editAccount(token, name, email, phone);
             navigation.pop();
           } catch (e) {
             setError(e.message);
@@ -77,7 +72,7 @@ function RegistrationScreen({ navigation }) {
   );
 }
 
-export default RegistrationScreen;
+export default EditAccountScreen;
 
 const styles = StyleSheet.create({
   input: {

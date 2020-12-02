@@ -9,7 +9,9 @@ import Heading from '../components/Heading';
 import Loading from '../components/Loading';
 
 function LoginScreen({navigation}) {
-  const {login} = React.useContext(AuthContext);
+  const {
+    auth: {login},
+  } = React.useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,7 @@ function LoginScreen({navigation}) {
           try {
             setLoading(true);
             await login(email, password);
+            navigation.navigate('Account');
           } catch (e) {
             setError(e.message);
             setLoading(false);
