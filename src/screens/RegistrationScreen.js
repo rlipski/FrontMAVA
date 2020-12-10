@@ -12,7 +12,7 @@ import { AuthContext } from '../contexts/AuthContext';
 
 function RegistrationScreen({ navigation }) {
   const {
-    auth: { register }
+    register
   } = React.useContext(AuthContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

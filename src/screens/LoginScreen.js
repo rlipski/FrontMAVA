@@ -8,12 +8,13 @@ import TextButton from '../components/TextButton';
 import Heading from '../components/Heading';
 import Loading from '../components/Loading';
 
+
 function LoginScreen({navigation}) {
   const {
-    auth: {login},
+   login
   } = React.useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('test@gmail.com');
+  const [password, setPassword] = useState('password');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 

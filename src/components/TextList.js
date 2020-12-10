@@ -2,12 +2,11 @@ import React, { Component, useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 
-function TextList({  style, name, value }) {
-
-
+function TextList({ style, name, value, onPress }) {
 
   return (
     <View style={[styles.container, style]}>
@@ -21,7 +20,6 @@ function TextList({  style, name, value }) {
       >
         {value}
       </Text>
-
     </View>
   );
 }

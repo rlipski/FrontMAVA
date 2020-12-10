@@ -3,6 +3,7 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import { UserContext } from '../contexts/UserContext';
 
+
 import Input from '../components/Input';
 import FilledButton from '../components/FilledButton';
 import TextButton from '../components/TextButton';
@@ -12,17 +13,18 @@ import TextList from '../components/TextList';
 
 import Api from '../Api';
 
-function ProfileScreen({navigation, route}) {
-  const {logout} = React.useContext(AuthContext);
-  const { user} = React.useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function AdvertisementDetailsScreen({navigation, route}) {
+  const { logout } = React.useContext(AuthContext);
+  const { user } = React.useContext(UserContext);
+
+  const [advertisement, setAdvertisement] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 /////
   const [state, setState] = useState([])
+  const { id } = route.params;
   useEffect(() => {
-    fetch(`${Api.getURL()}/user/1`, {
+    fetch(`${Api.getURL()}/advertisement/${id}`, {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -31,31 +33,36 @@ function ProfileScreen({navigation, route}) {
     })
       .then((res) => res.json())
       .then((resData) => {
-        console.log(route);
-        setState(resData.data);
+        console.log(resData);
+        setAdvertisement(resData);
       })
-  })
+  }, []);
 
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Heading style={styles.title}>PROFILE</Heading>
-{console.log(user)}
+      <Heading style={styles.title}>{advertisement.name}</Heading>
+{/* {console.log(user)} */}
 
-      {/* <TextList name="Name" value={user.user.name ? user.user.name : '-'}/>
-      <TextList name="Phone" value={user.user.phone ? user.user.phone : '-'}/>
-      <TextList name="Email" value={user.user.email ? user.user.email : '-'}/>
-      <TextList name="Address" value={user.user.street, " ", user.user.building_number, " ", user.user.apartment_numer }/>
-      <TextList name="Address 2" value={user.user.city, " ", user.user.zip_code }/> */}
+      <TextList name="Description" value={advertisement.description ? advertisement.description : '-'}/>
+      <TextList name="Price" value={advertisement.price ? advertisement.price : '-'}/>
+      <TextList name="Address" value={advertisement.location, " ", advertisement.location, " ", advertisement.location }/>
+      <TextList name="Address 2" value={advertisement.city, " ", advertisement.zip_code }/>
 
       <TextButton
-        title={`Edit`}
+        title={`Refresh`}
         onPress={() => {
-          navigation.navigate('EditAccount');
+          refresh();
         }}
       />
       <TextButton
-        title={`Logout`}
+        title={`Edit`}
+        onPress={() => {
+          navigation.navigate('AdvertisementEdit', { id: advertisement.id});
+        }}
+      />
+      <TextButton
+        title={`Delete`}
         onPress={() => {
           logout();
         }}
@@ -65,7 +72,7 @@ function ProfileScreen({navigation, route}) {
   );
 }
 
-export default ProfileScreen;
+export default AdvertisementDetailsScreen;
 
 const styles = StyleSheet.create({
   title: {
@@ -73,5 +80,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: 20,
+    width: '80%'
   }
 });

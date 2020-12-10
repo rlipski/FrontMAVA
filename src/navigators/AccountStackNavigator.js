@@ -11,7 +11,7 @@ const AccountStack = createStackNavigator();
 
 const LoginStack = createStackNavigator();
 
-function AccountStackNavigator() {
+function AccountStackNavigator(props) {
   return (
     <AccountStack.Navigator
       screenOptions={{
@@ -19,6 +19,7 @@ function AccountStackNavigator() {
       }}
       mode={'modal'}
     >
+{console.log(props)}
       <AccountStack.Screen name={'Profile'} component={ProfileScreen} />
       <AccountStack.Screen name={'EditAccount'} component={EditAccountScreen} />
     </AccountStack.Navigator>

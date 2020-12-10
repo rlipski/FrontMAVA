@@ -9,16 +9,15 @@ import IconButton from '../components/IconButton';
 import Loading from '../components/Loading';
 import Heading from '../components/Heading';
 import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 
 function EditAccountScreen({ navigation }) {
-  const {
-    auth: { editAccount },
-    user
-  } = React.useContext(AuthContext);
-  const [token, setToken] = useState(user.token);
-  const [name, setName] = useState(user.user.name);
-  const [email, setEmail] = useState(user.user.email);
-  const [phone, setPhone] = useState(user.user.phone);
+  const { editAccount } = React.useContext(AuthContext);
+  const { user, token } = React.useContext(UserContext);
+  // const [token, setToken] = useState(token);
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [phone, setPhone] = useState(user.phone);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -58,7 +57,7 @@ function EditAccountScreen({ navigation }) {
         title={'Save'}
         onPress={async () => {
           try {
-            setLoading(true);
+            setLoading(true); console.log(token,"totttoootototken");
             await editAccount(token, name, email, phone);
             navigation.pop();
           } catch (e) {

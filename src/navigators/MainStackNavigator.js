@@ -17,7 +17,7 @@ function MainStackNavigator() {
       }}
       mode={'modal'}
     >
-      <MainStack.Screen name={'Announcement'} component={AnnouncementsList} />
+      <MainStack.Screen name={'Advertisements'} component={AdvertisementsList} />
     </MainStack.Navigator>
   );
 }

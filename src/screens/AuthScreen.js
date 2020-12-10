@@ -3,7 +3,6 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthContext } from '../contexts/AuthContext';
-import AccountScreen from './AccountScreen';
 import AuthStackNavigator from '../navigators/AuthStackNavigator';
 import Api from '../Api';
 
@@ -11,7 +10,7 @@ import { createAction } from '../config/createAction';
 const RootStack = createStackNavigator();
 
 function AuthScreen(state) {
-  console.log(state);
+  console.log(state,"aaaaaaaaaaa");
   return (
       <RootStack.Navigator
         screenOptions={{
