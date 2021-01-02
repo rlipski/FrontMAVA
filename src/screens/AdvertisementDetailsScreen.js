@@ -3,7 +3,6 @@ import { Button, View, Text, StyleSheet } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
 import { UserContext } from '../contexts/UserContext';
 
-
 import Input from '../components/Input';
 import FilledButton from '../components/FilledButton';
 import TextButton from '../components/TextButton';
@@ -47,7 +46,6 @@ function AdvertisementDetailsScreen({navigation, route}) {
       <TextList name="Description" value={advertisement.description ? advertisement.description : '-'}/>
       <TextList name="Price" value={advertisement.price ? advertisement.price : '-'}/>
       <TextList name="Address" value={advertisement.location, " ", advertisement.location, " ", advertisement.location }/>
-      <TextList name="Address 2" value={advertisement.city, " ", advertisement.zip_code }/>
 
       <TextButton
         title={`Refresh`}
@@ -64,8 +62,29 @@ function AdvertisementDetailsScreen({navigation, route}) {
       <TextButton
         title={`Delete`}
         onPress={() => {
-          logout();
+          console.log(route);
+          // try {
+          //   setLoading(true);
+          //   fetch(`${Api.getURL()}/advertisement/${advertisement.id}`, {
+          //    method: 'DELETE',
+          //    headers: {
+          //      Accept: 'application/json',
+          //      'Content-Type': 'application/json',
+          //      'Authorization': `Bearer ${route.params.user.token }`,
+          //    }
+          //  })
+          //   .then(response => response.json())
+          //   .then(data => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+          //   .catch(err => console.log(err))
+          //   // navigation.pop();
+          // } catch (e) {
+          //   setError(e.message);
+          //   setLoading(false);
+          // }
         }}
+
+
+
       />
       <Loading loading={loading} />
     </View>

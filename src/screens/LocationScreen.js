@@ -24,7 +24,7 @@ export default class LocationScreen extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.findCoordinates}>
-          <Text style={styles.welcome}>Find My Coords?</Text>
+          <Text style={styles.welcome}>Current location</Text>
           <Text>Location: {this.state.location}</Text>
         </TouchableOpacity>
       </View>

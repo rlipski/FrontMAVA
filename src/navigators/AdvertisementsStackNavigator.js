@@ -23,7 +23,7 @@ function  AdvertisementsStackNavigator() {
   return (
     <AdvertisementsStack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}
       mode={'modal'}
     >

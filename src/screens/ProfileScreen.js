@@ -11,6 +11,7 @@ import Loading from '../components/Loading';
 import TextList from '../components/TextList';
 
 import Api from '../Api';
+import LocationScreen from './LocationScreen';
 
 function ProfileScreen({navigation, route}) {
   const {logout} = React.useContext(AuthContext);
@@ -42,12 +43,12 @@ function ProfileScreen({navigation, route}) {
       <Heading style={styles.title}>PROFILE</Heading>
 {console.log(user)}
 
-      {/* <TextList name="Name" value={user.user.name ? user.user.name : '-'}/>
-      <TextList name="Phone" value={user.user.phone ? user.user.phone : '-'}/>
-      <TextList name="Email" value={user.user.email ? user.user.email : '-'}/>
-      <TextList name="Address" value={user.user.street, " ", user.user.building_number, " ", user.user.apartment_numer }/>
-      <TextList name="Address 2" value={user.user.city, " ", user.user.zip_code }/> */}
-
+      <TextList name="Name" value={user.name ? user.name : '-'}/>
+      <TextList name="Phone" value={user.phone ? user.phone : '-'}/>
+      <TextList name="Email" value={user.email ? user.email : '-'}/>
+      <TextList name="Address" value={user.street, " ", user.building_number, " ", user.apartment_numer }/>
+      <TextList name="Address 2" value={user.city, " ", user.zip_code }/>
+      <LocationScreen />
       <TextButton
         title={`Edit`}
         onPress={() => {

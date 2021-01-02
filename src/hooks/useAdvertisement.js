@@ -6,7 +6,7 @@ import { sleep } from '../utils/sleep';
 import jwt_decode from 'jwt-decode';
 import SecureStorage from 'react-native-secure-storage';
 
-export function useAuth() {
+export function useAdvertisement() {
   const [state, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
@@ -29,40 +29,26 @@ export function useAuth() {
     },
   );
 
-  const auth = React.useMemo(
+  const action = React.useMemo(
     () => ({
-      login: async (email, password) => {
-        await fetch(`${Api.getURL()}/login`, {
-          method: 'POST',
+      delete: async (endpoint) => {
+        fetch(`${Api.getURL()}${endpoint}`, {
+          method: 'DELETE',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email: email, password: password }),
+            'Authorization': `Bearer ${token}`,
+          }
         })
           .then((res) => res.json())
-          .then(async (resData) => {
-            const user = {
-              token: resData.access_token,
-              user: resData.user,
-            };
-            await SecureStorage.setItem('user', JSON.stringify(user));
-            dispatch(createAction('SET_USER', user));
-          })
-          .catch((error) => {
-            console.log('Api call error');
-            alert(error.message);
+          .then((data) => {
+            setData(data);
+            console.log(data);
           });
       },
-
-      logout: async () => {
-        await SecureStorage.removeItem('user');
-        dispatch(createAction('REMOVE_USER'));
-      },
-
-      register: async (name, email, password) => {
-        console.log(`${Api.getURL()}/register`);
-        await fetch(`${Api.getURL()}/register`, {
+      add: async (name, description, price) => {
+        console.log(`${Api.getURL()}/advertisement`);
+        await fetch(`${Api.getURL()}/advertisement`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -72,6 +58,7 @@ export function useAuth() {
         })
           .then((res) => res.json())
           .then((resData) => {
+            console.log(resData);
           })
           .catch((error) => {
             console.log('Api call error');
@@ -81,8 +68,8 @@ export function useAuth() {
       editAccount: async (token, name, email, phone) => {
         const value = await AsyncStorage.getItem('userToken');
 
-        let decodedToken = jwt_decode(token);
-        console.log(JSON.stringify({ name: name, email: email, phone: phone }));
+        let decodedToken = jwt_decode(token); console.log(decodedToken);
+        console.log(`${Api.getURL()}/user/${decodedToken.sub}`);
         await fetch(`${Api.getURL()}/user/${decodedToken.sub}`, {
           method: 'PUT',
           headers: {
@@ -93,13 +80,8 @@ export function useAuth() {
           body: JSON.stringify({ name: name, email: email, phone: phone }),
         })
           .then((res) => res.json())
-          .then(async (resData) => {
-            const user = {
-              token: resData.access_token,
-              user: resData.user,
-            };
-            await SecureStorage.setItem('user', JSON.stringify(user));
-            dispatch(createAction('SET_USER', user));
+          .then((resData) => {
+            console.log(resData);
           })
           .catch((error) => {
             console.log('Api call error');
@@ -110,15 +92,15 @@ export function useAuth() {
     [],
   );
 
-  useEffect(() => {
-    sleep(2000).then(() => {
-      SecureStorage.getItem('user').then(user => {
-        if (user) {
-          dispatch(createAction('SET_USER', JSON.parse(user)));
-        }
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   sleep(2000).then(() => {
+  //     SecureStorage.getItem('user').then(user => {
+  //       if (user) {
+  //         dispatch(createAction('SET_USER', JSON.parse(user)));
+  //       }
+  //     });
+  //   });
+  // }, []);
 
-  return { auth, state };
+  return { action, state };
 }

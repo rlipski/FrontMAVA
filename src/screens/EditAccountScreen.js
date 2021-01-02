@@ -57,7 +57,7 @@ function EditAccountScreen({ navigation }) {
         title={'Save'}
         onPress={async () => {
           try {
-            setLoading(true); console.log(token,"totttoootototken");
+            setLoading(true);
             await editAccount(token, name, email, phone);
             navigation.pop();
           } catch (e) {

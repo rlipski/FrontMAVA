@@ -54,11 +54,6 @@ function AdvertisementEditScreen({navigation, route}) {
           navigation.navigate('AdvertisementDetails', { id: advertisement.id});
         }}
       />
-      <Heading style={styles.title}>{advertisement.name}</Heading>
-{/* {console.log(user)} */}
-
-      <TextList name="Address" value={advertisement.location, " ", advertisement.location, " ", advertisement.location }/>
-      <TextList name="Address 2" value={advertisement.city, " ", advertisement.zip_code }/>
 
       <Input
         style={styles.input}
@@ -91,7 +86,23 @@ function AdvertisementEditScreen({navigation, route}) {
         onPress={async () => {
           try {
             setLoading(true); console.log(token, "totttoootototken");
-            await editAccount(token, name, email, phone);
+            await fetch(`${Api.getURL()}/advertisement/${advertisement.id}`, {
+              method: 'PUT',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${token}`,
+              },
+              body: JSON.stringify({ name: name, description: description, location: location, price: price }),
+            })
+              .then((res) => res.json())
+              .then((resData) => {
+                console.log(resData);
+              })
+              .catch((error) => {
+                console.log('Api call error');
+                alert(error.message);
+              });
             navigation.pop();
           } catch (e) {
             setError(e.message);

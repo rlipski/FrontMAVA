@@ -13,7 +13,7 @@ function AdvertisementScreen(state) {
   return (
     <RootStack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}>
       <RootStack.Screen name={'RootStack'} component={AdvertisementsStackNavigator} />
     </RootStack.Navigator>
